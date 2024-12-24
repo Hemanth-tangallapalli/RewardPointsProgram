@@ -39,6 +39,7 @@ public class RewardProgramServiceTest {
 	}
 
 	@Test
+	// Test Case 1: Valid Scenario : Testing the service method
 	void testCalculateRewardPoints_Success() {
 		Long customerId = 1L;
 		LocalDate startDate = LocalDate.of(2024, 10, 01);
@@ -57,6 +58,7 @@ public class RewardProgramServiceTest {
 	}
 
 	@Test
+	// Test Case 2: Customer Not Found Scenario
 	void testCalculateRewardPoints_CustomerNotFound() {
 		Long customerId = 10L;
 		LocalDate startDate = LocalDate.of(2024, 10, 01);
@@ -69,6 +71,7 @@ public class RewardProgramServiceTest {
 	}
 
 	@Test
+	// Test Case 3: No transactions Present
 	void testCalculateRewardPoints_NoTransactions() {
 		Long customerId = 1L;
 		LocalDate startDate = LocalDate.of(2025, 10, 01);
