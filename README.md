@@ -3,50 +3,54 @@
 Problem Statement
 ===============================
 A retailer offers a rewards program to its customers, awarding points based on each recorded purchase. <br />
-  
+
 A customer receives 2 points for every dollar spent over $100 in each transaction, plus 1 point for every dollar spent between $50 and $100 in each transaction. <br />
 (e.g. a $120 purchase = 2x$20 + 1x$50 = 90 points). <br />
-  
+
 Given a record of every transaction during a three month period, calculate the reward points earned for each customer per month and total. <br />
 
 Technical Details
 ================================
-Programming Language : Java<br />
-Framework : Spring Boot<br />
-Database : H-2 Database(In memory database)<br />
+* Programming Language : Java<br />
+* Framework : Spring Boot<br />
+* Database : H-2 Database(In memory database)<br />
 
 Design Details
 ================================
 Database Configuration
 -----------------------
-We are using H2 Database for this operation. H2 is a in-memory database.<br />
-Created two Database tables: Customer and Transaction.<br />
-Customer Table holds the customer information like customerId and name.<br />
-Transaction Table holds the Transaction information like id, amountSpent, transactionDate and customer_id.<br />
-Configured the database related configurations in application.properties under resources.<br />
-Configured a data.sql file under resources to load data into the database tables.<br />
+* We are using H2 Database for this operation. H2 is a in-memory database.<br />
+* Created two Database tables: Customer and Transaction.<br />
+* Customer Table holds the customer information like customerId and name.<br />
+* Transaction Table holds the Transaction information like id, amountSpent, transactionDate and customer_id.<br />
+* Configured the database related configurations in application.properties under resources.<br />
+* Configured a data.sql file under resources to load data into the database tables.<br />
 
 Programming Approach
 -----------------------
-Created individual packages for the service, model, repository, controller, DTOs, exception handling and Tests.<br />
-Under model layer, created two entity classes: Customer and transaction to hold the parameters and created setter and getter methods.<br />
-Under repository layer, created two interfaces which extends the JPARepository for the repository methods. Under RewardProgramRepository interface added a new method "findByCustomerIdAndTransactionDateBetween" which takes the input as customerId,startDate,endDate and returns the records between the given timeframe.<br />
-Under Service layer, created methods for the business logic. Created method to calculate the reward points for the given customer and fetching the transaction details from the repository layer.<br />
-Under controller layer, created a rest api using postmapping annotation and under this method we are making a call to service layer and fetching the reward points based on the input provided for the api.<br />
-Under DTO package, created two DTO classes to hold the input request and the output response.<br />
-Under exception handling package, created a GlobalExceptionHandler class to capture the exception scenarios and handled those scenarios using valid responses.<br />
-Under the path src/test/java, created two test classes RewardProgramControllerTest and RewardProgramServiceTest for testing various test scenarios for the controller and service layer.
+* Created individual packages for the service, model, repository, controller, DTOs, exception handling and Tests.<br />
+* Under model layer, created two entity classes: Customer and transaction to hold the parameters and created setter and getter methods.<br />
+* Under repository layer, created two interfaces which extends the JPARepository for the repository methods. Under RewardProgramRepository interface added a new method "findByCustomerIdAndTransactionDateBetween" which takes the input as customerId,startDate,endDate and returns the records between the given timeframe.<br />
+* Under Service layer, created methods for the business logic. Created method to calculate the reward points for the given customer and fetching the transaction details from the repository layer.<br />
+* Under controller layer, created a rest api using postmapping annotation and under this method we are making a call to service layer and fetching the reward points based on the input provided for the api.<br />
+* Under DTO package, created two DTO classes to hold the input request and the output response.<br />
+* Under exception handling package, created a GlobalExceptionHandler class to capture the exception scenarios and handled those scenarios using valid responses.<br />
+* Under the path src/test/java, created two test classes RewardProgramControllerTest and RewardProgramServiceTest for testing various test scenarios for the controller and service layer.
 
 API Details
 ==========================
-URL : http://localhost:8080/rewards/{customerId}?startDate={startDate}&endDate={endDate} <br />
+URL : 
+
+```
+http://localhost:8080/rewards/{customerId}?startDate={startDate}&endDate={endDate}
+```
 Type : GET
 
-Sample Input Request :
+* Sample Input Request :
 ```
 http://localhost:8080/rewards/1?startDate=2024-10-10&endDate=2025-11-10
 ```
-Sample Output Response:
+* Sample Output Response:
 ```
 {
     "customerId": 1,
@@ -82,7 +86,7 @@ INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (1
 ```
 Test scenarios:
 -----------------------------
-1) Valid scenario
+* Valid scenario
 
 Request:
 ```
@@ -102,11 +106,11 @@ Response:
     }
 }
 ```
-2) Invalid Request/Empty Request 
+* Invalid Request/Empty Request 
 
 Request:
 ```
-	http://localhost:8080/rewards/?startDate=2024-08-10&endDate=2025-11-10
+http://localhost:8080/rewards/?startDate=2024-08-10&endDate=2025-11-10
 ```
 Response:
 ```
@@ -116,7 +120,7 @@ Response:
 }
 ```
 
-3) Invalid Date format
+* Invalid Date format
 
 Request : 
 ```
@@ -130,7 +134,7 @@ Response:
 }
 ```
 
-4) Start date later than end date
+* Start date later than end date
 
 Request:
 ```
@@ -144,7 +148,7 @@ Response:
 }
 ```
 	
-5) Customer Id not found
+* Customer Id not found
 
 Request:
 ```
@@ -153,7 +157,21 @@ http://localhost:8080/rewards/10?startDate=2026-08-01&endDate=2025-11-10
 Response:
 ```
 {
-    "timeStamp": "2024-12-24T16:54:59.2952509",
-    "message": "Start date cannot be later than end date"
+    "timeStamp": "2024-12-24T17:25:11.6821244",
+    "message": "Customer not found"
+}
+```
+
+* Invalid Customer Id Format
+
+Request:
+```
+http://localhost:8080/rewards/ui?startDate=2026-08-01&endDate=2025-11-10
+```
+Response:
+```
+{
+    "timeStamp": "2024-12-24T17:31:52.1287622",
+    "message": "Enter valid customerId"
 }
 ```
