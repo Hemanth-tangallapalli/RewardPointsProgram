@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
 //Creating Transaction table to hold the transaction details
 @Entity
 public class Transaction {
@@ -16,6 +17,17 @@ public class Transaction {
 
 	@ManyToOne
 	private Customer customer;
+
+	public Transaction() {
+	}
+
+	public Transaction(Long id, Double amountSpent, LocalDate transactionDate, Customer customer) {
+		super();
+		this.id = id;
+		this.amountSpent = amountSpent;
+		this.transactionDate = transactionDate;
+		this.customer = customer;
+	}
 
 	public Long getId() {
 		return id;

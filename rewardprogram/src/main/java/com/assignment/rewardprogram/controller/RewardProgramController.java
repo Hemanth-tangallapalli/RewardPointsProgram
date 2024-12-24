@@ -35,6 +35,9 @@ public class RewardProgramController {
 		if (customerId == null || startDate == null || endDate == null) {
 			throw new NullPointerException("Invalid Request");
 		}
+		if (customerId < 0) {
+			throw new IllegalArgumentException("Enter valid CustomerId");
+		}
 		RewardRequestDTO rewardRequest = new RewardRequestDTO(customerId, startDate, endDate);
 		// Input Validation: startDate Validation
 		if (rewardRequest.getStartDate().isAfter(rewardRequest.getEndDate())) {
