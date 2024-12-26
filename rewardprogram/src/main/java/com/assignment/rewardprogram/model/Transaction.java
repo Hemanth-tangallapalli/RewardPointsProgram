@@ -5,9 +5,15 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 //Creating Transaction table to hold the transaction details
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transaction {
 
 	@Id
@@ -17,48 +23,5 @@ public class Transaction {
 
 	@ManyToOne
 	private Customer customer;
-
-	public Transaction() {
-	}
-
-	public Transaction(Long id, Double amountSpent, LocalDate transactionDate, Customer customer) {
-		super();
-		this.id = id;
-		this.amountSpent = amountSpent;
-		this.transactionDate = transactionDate;
-		this.customer = customer;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Double getAmountSpent() {
-		return amountSpent;
-	}
-
-	public void setAmountSpent(Double amountSpent) {
-		this.amountSpent = amountSpent;
-	}
-
-	public LocalDate getTransactionDate() {
-		return transactionDate;
-	}
-
-	public void setTransactionDate(LocalDate transactionDate) {
-		this.transactionDate = transactionDate;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
 
 }
