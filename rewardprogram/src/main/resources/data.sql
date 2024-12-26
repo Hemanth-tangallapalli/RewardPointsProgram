@@ -13,3 +13,5 @@ INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (8
 INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (9,120.00,'2024-12-01',3);
 INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (10,190.00,'2024-08-01',3);
 INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (11,240.00,'2024-07-01',3);
+INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (12,50.00,'2024-07-03',1);
+INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (13,100.00,'2024-06-04',1);

@@ -35,7 +35,7 @@ Programming Approach
 * Under controller layer, created a rest api using postmapping annotation and under this method we are making a call to service layer and fetching the reward points based on the input provided for the api.<br />
 * Under DTO package, created two DTO classes to hold the input request and the output response.<br />
 * Under exception handling package, created a GlobalExceptionHandler class to capture the exception scenarios and handled those scenarios using valid responses.<br />
-* Under the path src/test/java, created two test classes RewardProgramControllerTest and RewardProgramServiceTest for testing various test scenarios for the controller and service layer.
+* Under the path src/test/java, created test classes RewardProgramControllerIntegrationTest for Integration Testing,RewardProgramControllerTest and RewardProgramServiceTest for testing various test scenarios for the controller and service layer.
 
 API Details
 ==========================
@@ -83,6 +83,8 @@ INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (8
 INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (9,120.00,'2024-12-01',3);
 INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (10,190.00,'2024-08-01',3);
 INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (11,240.00,'2024-07-01',3);
+INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (12,50.00,'2024-07-03',1);
+INSERT INTO transaction (id,amount_spent,transaction_date,customer_id) VALUES (13,100.00,'2024-06-04',1);
 ```
 Test scenarios:
 -----------------------------
@@ -173,5 +175,42 @@ Response:
 {
     "timeStamp": "2024-12-24T17:31:52.1287622",
     "message": "Enter valid customerId"
+}
+```
+
+* Valid Scenario : Transaction amount 50
+
+Request:
+```
+http://localhost:8080/rewards/1?startDate=2024-07-01&endDate=2024-07-31
+```
+Response:
+```
+{
+    "customerId": 1,
+    "customerName": "Hemanth",
+    "totalRewardPoints": 0,
+    "noOfTransactions": 1,
+    "monthlyPoints": {
+        "JULY": 0
+    }
+}
+```
+* Valid Scenario : Transaction amount 100
+
+Request:
+```
+http://localhost:8080/rewards/1?startDate=2024-06-01&endDate=2024-06-30
+```
+Response:
+```
+{
+    "customerId": 1,
+    "customerName": "Hemanth",
+    "totalRewardPoints": 50,
+    "noOfTransactions": 1,
+    "monthlyPoints": {
+        "JUNE": 50
+    }
 }
 ```
